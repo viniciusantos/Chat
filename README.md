@@ -1,4 +1,4 @@
-# Simple server and client chat application
+# Simple client/server chat application
 
 This project is split in two applications:
 
