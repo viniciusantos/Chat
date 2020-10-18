@@ -2,9 +2,9 @@
 
 This project is split in two applications:
 
-A "Server", is a rest service that manage the route messages and handshake connection.
+A "Server" application, that is a rest service that manages the route messages and handshake connection.
 
-And a simple html client, that connect to this server to send and receive messages.
+A "Client", that is a simple html/javascript file that connects to the server to send and receive messages.
  
 Follow the instructions bellow to run the application.
 
@@ -13,6 +13,20 @@ Follow the instructions bellow to run the application.
 ### Tools requirements
 
 .Net Core SDK 3.1
+
+To run the Chat server, follow the steps bellow;
+
+1 Find the take.sln file on the root repository.
+2 Open on a visual studio 2019
+3 Press the visual studio play button to run the project under the iisexpress. (Make sure the project will start on http://localhost:55242/ address.)
+
+To run the client, follow the steps bellow:
+
+1 Find the chat.html file on the root repository
+2 Open the file on a browser that supports websocket connections.
+
+Notes:
+Every instance from the chat.html stands for one client application.
 
 
 ---
