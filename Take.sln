@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Take.ChatServer", "Take.ChatServer\Take.ChatServer.csproj", "{CE266E42-AA6B-46FE-BFB7-A97162C694C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Take.ChatServer", "Chat\Take.ChatServer\Take.ChatServer.csproj", "{CE266E42-AA6B-46FE-BFB7-A97162C694C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Take.ChatServer.XUnitTest", "Take.ChatServer.XUnitTest\Take.ChatServer.XUnitTest.csproj", "{EE4722D7-0355-448D-B395-90024631652D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Take.ChatServer.XUnitTest", "Chat\Take.ChatServer.XUnitTest\Take.ChatServer.XUnitTest.csproj", "{EE4722D7-0355-448D-B395-90024631652D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
