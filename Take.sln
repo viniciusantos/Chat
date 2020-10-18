@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Take.ChatServer", "Take.ChatServer\Take.ChatServer.csproj", "{CE266E42-AA6B-46FE-BFB7-A97162C694C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Take.ChatServer.XUnitTest", "Take.ChatServer.XUnitTest\Take.ChatServer.XUnitTest.csproj", "{EE4722D7-0355-448D-B395-90024631652D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CE266E42-AA6B-46FE-BFB7-A97162C694C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE266E42-AA6B-46FE-BFB7-A97162C694C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE266E42-AA6B-46FE-BFB7-A97162C694C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE266E42-AA6B-46FE-BFB7-A97162C694C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE4722D7-0355-448D-B395-90024631652D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE4722D7-0355-448D-B395-90024631652D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE4722D7-0355-448D-B395-90024631652D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE4722D7-0355-448D-B395-90024631652D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B1FDA281-E70B-4E10-8792-5E3BFD0DBCCE}
+	EndGlobalSection
+EndGlobal

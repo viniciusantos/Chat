@@ -3,3 +3,8 @@
 ################################################################################
 
 /Take.ChatServer/bin/Debug/netcoreapp3.1
+/Take.ChatServer/obj
+/Take.ChatServer.Tests/Take.ChatServer.Tests/bin/Debug/netcoreapp3.1
+/Take.ChatServer.XUnitTest/obj
+/Take.ChatServer.XUnitTest/bin/Debug/netcoreapp3.1
+/Take.ChatServer.Tests/Take.ChatServer.Tests/obj
