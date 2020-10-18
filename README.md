@@ -16,14 +16,14 @@ Follow the instructions bellow to run the application.
 
 To run the Chat server, follow the steps bellow;
 
-1 Find the take.sln file on the root repository.
-2 Open on a visual studio 2019
+1 Find the take.sln file on the root repository.<br/>
+2 Open on a visual studio 2019<br/>
 3 Press the visual studio play button to run the project under the iisexpress. (Make sure the project will start on http://localhost:55242/ address.)
 
 To run the client, follow the steps bellow:
 
-1 Find the chat.html file on the root repository
-2 Open the file on a browser that supports websocket connections.
+1 Find the chat.html file on the root repository<br/>
+2 Open the file on a browser that supports websocket connections.<br/>
 
 Notes:
 Every instance from the chat.html stands for one client application.
