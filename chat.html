@@ -1,0 +1,292 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+		
+		<style>
+			.nopadding {
+			   padding: 0 !important;
+			}
+			
+			.fill { 
+				min-height: 99%;
+				height: 99%;
+			}
+			
+			#chat-screen{
+			
+				border: 1px solid #ccc;
+				height: 50%;
+				margin: 5%;
+				
+				overflow-y: scroll; height:400px;
+			}
+			
+			textarea{
+				width: 100%;
+			}
+			
+			.list-group-item{
+			
+				cursor: pointer;
+			}
+		</style>
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		
+		<div id="connect-content" class="row primary" style="margin-top: 15%;">
+			<div class="panel panel-primary col-md-4 col-md-offset-4 nopadding">
+			  <div class="panel-heading">Welcome to our test chat.</div>
+			  <div class="panel-body">
+				<div class="form-group">
+					<input type="text" class="form-control" id="username" autocomplete="off" placeholder="Enter username">
+				</div>
+				<button type="submit" id="connect-btn" class="btn btn-success col-md-12">Connect</button>
+			  </div>
+			</div>
+		</div>
+		
+		<div id="content" class="container-fluid" style="display:none;">
+			<div class="panel panel-primary col-md-2 nopadding fill">
+			  <div class="panel-heading">Connected users</div>
+			  <div class="panel-body nopadding">
+				<div id="content-connected-users">
+					<ul class="list-group" id="list-connectedUsers">
+						<li class="list-group-item" onclick="loadConversation('publicChat')">Public Chat</li>
+					</ul>
+				</div>
+			  </div>
+			</div>
+			
+			<div class="panel panel-primary col-md-9 col-md-offset-1 nopadding fill" id="conversation-main" style="display:none;">
+			  <div class="panel-heading" id="conversation-header"></div>
+			  <div class="panel-body nopadding">
+				<div id="chat-screen">
+					
+				</div>
+				<div class="col-md-12" style="padding: 0% 5%;">
+					<textarea id="send-textarea"></textarea>
+				</div>
+				<div class="col-md-12" style="padding: 1% 5%;">
+					<button type="submit" id="btn-send-message" class="btn btn-success col-md-offset-10 col-md-2">Send Message</button>
+				</div>
+			  </div>
+			</div>
+		</div>
+		
+	</body>
+	<script language="javascript" type="text/javascript">
+		
+		var _conversations = [];
+		var _username;
+		var _usernameTo;
+		
+		$(window).on("beforeunload", function() { 
+			disconnect(); 
+		});
+		
+		function disconnect(){
+		
+			$.ajax('http://localhost:55242/Chat/Disconnect', {
+					type: 'GET', 
+					crossDomain: true,
+					
+					data: { username: $('#username').val() },
+					xhrFields: {
+						withCredentials: false
+					}
+				});
+		
+		}
+		
+		function updateUsersConnected(allUsersConnected){
+			
+			$('#list-connectedUsers').empty();
+			$('#list-connectedUsers').append('<li class="list-group-item" onclick="loadConversation(\'publicChat\')">Public Chat</li>');
+			
+			$.each(allUsersConnected, function(index, value){
+				if(value != _username)
+					$('#list-connectedUsers').append('<li class="list-group-item" onclick="loadConversation(\'' + value + '\')">' + value + '</li>');
+			});
+		}
+		
+		function loadConversation(username){
+			$('#chat-screen').empty();
+			_usernameTo = username;
+			
+			var conversation = _conversations.find(cv => cv.from == username);
+			
+			if(conversation !== undefined){
+				
+				//set conversation on html
+				var strShowMessage = '';
+				$.each(conversation.messages, function(index, message){
+				
+					strShowMessage += message;
+				});
+				
+				$('#chat-screen').append(strShowMessage);				
+			}
+		
+			$('#conversation-main').show();
+			$('#conversation-header').text(username);
+		}
+		
+		function privateMessageReceived(messageResult){
+			
+			//set conversation
+			var conversation = _conversations.find(cv => cv.from == messageResult.from);
+			
+			if(conversation === undefined){
+				
+				//add conversation for the first time
+				
+				_conversations.push(
+					{
+						from: messageResult.from, 
+						messages: [formatMessage(messageResult.from, messageResult.message)]
+					}
+				);
+			}
+			else{
+				conversation.messages.push(formatMessage(messageResult.from, messageResult.message));
+			}
+			
+			if(messageResult.from == _usernameTo){
+				loadConversation(_usernameTo);
+			}
+				
+		}
+		
+		function publicMessageReceived(messageResult){
+			
+			//set conversation
+			var conversation = _conversations.find(cv => cv.from == 'publicChat');
+			
+			if(conversation === undefined){
+				
+				//add conversation for the first time
+				
+				_conversations.push(
+					{
+						from: 'publicChat', 
+						messages: [formatMessage(messageResult.from, messageResult.message)]
+					}
+				);
+			}
+			else{
+				conversation.messages.push(formatMessage(messageResult.from, messageResult.message));
+			}
+			
+			if('publicChat' == _usernameTo){
+				loadConversation(_usernameTo);
+			}
+				
+		}
+		
+		function formatMessage(username, message){
+			
+			var result = '<div class="conversation-title">' + username + ' says:</div>';
+			result += '<div class="conversation-text">' + message + '</div>';
+			
+			return result;
+		}
+		
+		function addMessage(message){
+			
+			//set conversation
+			var conversation = _conversations.find(cv => cv.from == _usernameTo);
+			
+			if(conversation === undefined){
+				
+				//add conversation for the first time
+				
+				_conversations.push(
+					{
+						from: _usernameTo, 
+						messages: [formatMessage(_username, message)]
+					}
+				);
+			}
+			else{
+				conversation.messages.push(formatMessage(_username, message));
+			}
+		}
+		
+		$(document).ready(function(){
+			
+			$('#connect-btn').click(function(){
+			
+				connect($('#username').val());
+				
+			});
+			
+			$('#btn-send-message').click(function(){
+				var message = $('#send-textarea').val();
+				
+				var isPublic = _usernameTo == "publicChat";
+				
+				$.ajax('http://localhost:55242/Chat/SendMessage', {
+					type: 'POST', 
+					crossDomain: true,
+					contentType: 'application/json',
+					data: JSON.stringify({ from: _username, message: message, to: _usernameTo, isPublicMessage: isPublic }),
+					xhrFields: {
+						withCredentials: false
+					},
+					success: function(data){
+						$('#send-textarea').val('');
+						
+						if(!isPublic)
+							addMessage(message);
+							
+						loadConversation(_usernameTo);
+					}
+				});
+				
+			});
+			
+			function connect(username) {
+
+				var uri = "ws://localhost:55242/chat/connect?username=" + username;
+				
+				socket = new WebSocket(uri);
+				socket.onopen = function(event) {
+					_username = username;
+					$('#connect-content').hide();
+					$('#content').show();
+				};
+				socket.onclose = function(event) {
+					console.log("closed connection from " + uri);
+				};
+				socket.onmessage = function(event) {
+					
+					var messageResult = JSON.parse(event.data);
+					
+					console.log(messageResult);
+					
+					if(messageResult.action == 'userConnectedUpdate'){
+						updateUsersConnected(messageResult.allUsersConnected);
+					}
+					
+					if(messageResult.action == 'privateMessage'){
+						privateMessageReceived(messageResult);
+					}
+					
+					if(messageResult.action == 'publicMessage'){
+						publicMessageReceived(messageResult);
+					}
+				};
+				socket.onerror = function(event) {
+					alert('The connection is failed. try another username.');
+				};
+			}
+			
+		});
+		
+		//connect();
+		
+	</script>
+</html>
